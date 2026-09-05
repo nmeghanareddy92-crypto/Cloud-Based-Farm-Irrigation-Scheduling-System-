@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cloud-Based Farm Irrigation Scheduling System | Smart Precision Agriculture</title>
+  <meta name="description" content="A state-of-the-art Cloud-Based Farm Irrigation Scheduling System featuring IoT telemetry simulation, Penman-Monteith ET0 calculation, smart automated scheduling, and cloud analytics.">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="./css/styles.css">
+  
+  <!-- Feather / Font Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Header & Navigation Bar
+       ========================================================================== -->
+  <header class="navbar">
+    <div class="container">
+      <a href="#home" class="nav-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-cloud-sun-rain"></i>
+        </div>
+        <span>AgriCloud <span class="gradient-text">Irrigate</span></span>
+      </a>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#monitor-soil" class="nav-link">Monitor Soil</a></li>
+        <li><a href="#schedule-irrigation" class="nav-link">Schedule Irrigation</a></li>
+        <li><a href="#track-schedule" class="nav-link">Track Schedule</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <span id="adminStatusBadge" class="admin-badge" style="display: none;">Admin Active</span>
+        <button id="adminLoginBtn" class="btn btn-sm btn-outline">
+          <i class="fa-solid fa-user-shield"></i> Admin
+        </button>
+        <button onclick="openModal('cloudArchModal')" class="btn btn-sm btn-secondary" title="View Cloud Architecture">
+          <i class="fa-solid fa-network-wired"></i> Architecture
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Hero Section
+       ========================================================================== -->
+  <section id="home" class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="section-tag"><i class="fa-solid fa-microchip"></i> Next-Gen Cloud Computing IoT</span>
+          <h1>Smart Irrigation for <span class="gradient-text">Smarter Farming</span>.</h1>
+          <p>Optimize agricultural water consumption using cloud-connected IoT soil telemetry, real-time evapotranspiration modeling, and dynamic smart scheduling algorithms.</p>
+          
+          <div class="hero-buttons">
+            <a href="#schedule-irrigation" class="btn btn-primary">
+              <i class="fa-solid fa-calendar-plus"></i> Schedule Irrigation
+            </a>
+            <a href="#monitor-soil" class="btn btn-secondary">
+              <i class="fa-solid fa-chart-line"></i> Monitor Sensors
+            </a>
+            <button onclick="openModal('promptGeneratorModal')" class="btn btn-outline">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> AI Master Prompt
+            </button>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="stat-item">
+              <h3 id="statTotalSchedules">3</h3>
+              <p>Schedules Saved</p>
+            </div>
+            <div class="stat-item">
+              <h3 id="statCompletedSchedules">1</h3>
+              <p>Completed Runs</p>
+            </div>
+            <div class="stat-item">
+              <h3>38.5%</h3>
+              <p>Water Saved</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="cloud-telemetry-badge">
+            <div class="pulse-dot"></div>
+            <span>AWS IoT Core Stream • Live 24ms</span>
+          </div>
+
+          <div class="glass-card" style="position: relative; overflow: hidden; padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+              <h3 style="font-size: 1.25rem;"><i class="fa-solid fa-satellite-dish" style="color: var(--primary);"></i> Live Telemetry Stream</h3>
+              <span class="badge-active zone-badge">Synced</span>
+            </div>
+
+            <div class="telemetry-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 1rem;">
+              <div>
+                <span class="sensor-title"><i class="fa-solid fa-droplet" style="color: #00f2fe;"></i> Soil Moisture</span>
+                <div class="sensor-value" id="telemetryMoisture">38%</div>
+              </div>
+              <div>
+                <span class="sensor-title"><i class="fa-solid fa-temperature-half" style="color: #f39c12;"></i> Soil Temp</span>
+                <div class="sensor-value" id="telemetryTemp">28.5°C</div>
+              </div>
+              <div>
+                <span class="sensor-title"><i class="fa-solid fa-sun" style="color: #f1c40f;"></i> Solar Rad</span>
+                <div class="sensor-value" id="telemetrySolar">780 W/m²</div>
+              </div>
+              <div>
+                <span class="sensor-title"><i class="fa-solid fa-server" style="color: var(--primary);"></i> IoT Payloads</span>
+                <div class="sensor-value" id="cloudMsgCount">142,890</div>
+              </div>
+            </div>
+
+            <div class="progress-bar-container">
+              <div id="telemetryMoistureProgress" class="progress-bar-fill" style="width: 38%;"></div>
+            </div>
+            <p style="font-size: 0.8rem; color: var(--text-dim); text-align: right; margin-top: 0.25rem;">Live updates every 3s via Simulated Cloud MQTT</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Soil & Weather Monitoring Dashboard
+       ========================================================================== -->
+  <section id="monitor-soil">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-gauge-high"></i> Telemetry & Analytics</span>
+        <h2 class="section-title">Soil & Weather Monitoring</h2>
+        <p class="section-subtitle">Real-time edge sensor diagnostics and cloud evapotranspiration intelligence.</p>
+      </div>
+
+      <!-- Telemetry Cards -->
+      <div class="telemetry-grid">
+        <div class="glass-card sensor-card">
+          <div class="sensor-header">
+            <span class="sensor-title"><i class="fa-solid fa-droplet" style="color: var(--accent-cyan);"></i> Avg Soil Moisture</span>
+            <i class="fa-solid fa-signal" style="color: var(--primary);"></i>
+          </div>
+          <div class="sensor-value">38 <span class="sensor-unit">%</span></div>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" style="width: 38%;"></div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Target Optimal Range: 40% - 65%</p>
+        </div>
+
+        <div class="glass-card sensor-card">
+          <div class="sensor-header">
+            <span class="sensor-title"><i class="fa-solid fa-cloud-sun" style="color: var(--accent-amber);"></i> Weather Forecast</span>
+            <i class="fa-solid fa-bolt" style="color: var(--accent-amber);"></i>
+          </div>
+          <div class="sensor-value">28.5 <span class="sensor-unit">°C / Sunny</span></div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Humidity: 62% • Wind: 12 km/h</p>
+        </div>
+
+        <div class="glass-card sensor-card">
+          <div class="sensor-header">
+            <span class="sensor-title"><i class="fa-solid fa-calculator" style="color: var(--primary);"></i> ET0 Evapotranspiration</span>
+            <i class="fa-solid fa-brain" style="color: var(--primary);"></i>
+          </div>
+          <div class="sensor-value">4.8 <span class="sensor-unit">mm/day</span></div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Penman-Monteith Calculation</p>
+        </div>
+
+        <div class="glass-card sensor-card">
+          <div class="sensor-header">
+            <span class="sensor-title"><i class="fa-solid fa-faucet-drip" style="color: #4facfe;"></i> Valve Infrastructure</span>
+            <span class="status-tag status-inprogress">1 Active</span>
+          </div>
+          <div class="sensor-value">4 <span class="sensor-unit">Zones Online</span></div>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Automated Pressure & Flow Control</p>
+        </div>
+      </div>
+
+      <!-- Live Farm Sector Grid -->
+      <h3 style="margin-top: 3rem; margin-bottom: 1rem;"><i class="fa-solid fa-border-all" style="color: var(--primary);"></i> Farm Sector Zones</h3>
+      <div class="zone-grid" id="zonesGrid">
+        <!-- Dynamically rendered by app.js -->
+      </div>
+
+      <!-- Charts Section -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem;">
+        <div class="glass-card">
+          <h4 style="margin-bottom: 1rem;"><i class="fa-solid fa-chart-area" style="color: var(--primary);"></i> 24-Hour Soil Moisture Curve (%)</h4>
+          <canvas id="moistureChart" style="width: 100%; height: 260px;"></canvas>
+        </div>
+        <div class="glass-card">
+          <h4 style="margin-bottom: 1rem;"><i class="fa-solid fa-chart-column" style="color: var(--accent-cyan);"></i> Smart Water Savings (Liters)</h4>
+          <canvas id="waterSavedChart" style="width: 100%; height: 260px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Irrigation Scheduling Form
+       ========================================================================== -->
+  <section id="schedule-irrigation" style="background: rgba(0, 0, 0, 0.2);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-calendar-plus"></i> Smart Form</span>
+        <h2 class="section-title">Schedule Irrigation</h2>
+        <p class="section-subtitle">Create a automated cloud schedule. Validated client-side and saved to persistent cloud storage.</p>
+      </div>
+
+      <div class="glass-card" style="max-width: 850px; margin: 0 auto;">
+        <div id="scheduleAlert"></div>
+
+        <form id="irrigationForm" class="form-grid">
+          <!-- Farmer Name -->
+          <div class="form-group">
+            <label class="form-label" for="farmerName">Farmer Name <span style="color: var(--accent-danger);">*</span></label>
+            <input type="text" id="farmerName" class="form-control" placeholder="e.g. Ramesh Patel" required>
+          </div>
+
+          <!-- Farm Location -->
+          <div class="form-group">
+            <label class="form-label" for="farmLocation">Farm Location / Sector <span style="color: var(--accent-danger);">*</span></label>
+            <input type="text" id="farmLocation" class="form-control" placeholder="e.g. North Block Sector A" required>
+          </div>
+
+          <!-- Crop Type -->
+          <div class="form-group">
+            <label class="form-label" for="cropType">Crop Type <span style="color: var(--accent-danger);">*</span></label>
+            <select id="cropType" class="form-control" required>
+              <option value="Rice">Rice (Paddy)</option>
+              <option value="Wheat">Wheat</option>
+              <option value="Maize">Maize (Corn)</option>
+              <option value="Vegetables">Vegetables</option>
+              <option value="Cotton">Cotton</option>
+              <option value="Sugarcane">Sugarcane</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+
+          <!-- Soil Moisture Level -->
+          <div class="form-group">
+            <label class="form-label" for="soilMoisture">
+              Current Soil Moisture Level (%) <span style="color: var(--accent-danger);">*</span>
+            </label>
+            <div class="range-slider-wrap">
+              <input type="range" id="soilMoisture" min="0" max="100" value="35" class="form-control" style="padding: 0;">
+              <span id="moistureValBadge" class="range-val-badge">35%</span>
+            </div>
+          </div>
+
+          <!-- Weather Condition -->
+          <div class="form-group">
+            <label class="form-label" for="weatherCondition">Weather Condition <span style="color: var(--accent-danger);">*</span></label>
+            <select id="weatherCondition" class="form-control" required>
+              <option value="Sunny">Sunny / Clear</option>
+              <option value="Cloudy">Cloudy</option>
+              <option value="Rainy">Rainy</option>
+              <option value="Hot & Dry">Hot & Dry</option>
+              <option value="Windy">Windy</option>
+            </select>
+          </div>
+
+          <!-- Irrigation Date & Time -->
+          <div class="form-group">
+            <label class="form-label" for="irrigationDateTime">Irrigation Date & Time <span style="color: var(--accent-danger);">*</span></label>
+            <input type="datetime-local" id="irrigationDateTime" class="form-control" required>
+          </div>
+
+          <!-- AI Irrigation Frequency Suggestion Card -->
+          <div class="form-group full-width">
+            <div class="ai-recommendation-box">
+              <div class="ai-icon-pulse">
+                <i class="fa-solid fa-microchip"></i>
+              </div>
+              <div>
+                <h4 style="color: var(--primary); margin-bottom: 0.25rem;">Cloud AI Irrigation Recommendation</h4>
+                <p id="formRecommendation" style="font-size: 0.9rem; color: var(--text-muted);">
+                  💡 Moderate Moisture for Rice: Standard 30 min scheduled morning irrigation advised.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit CTA -->
+          <div class="form-group full-width" style="margin-top: 1rem;">
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.05rem;">
+              <i class="fa-solid fa-paper-plane"></i> Submit Irrigation Schedule
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Irrigation Tracking & Schedules Table
+       ========================================================================== -->
+  <section id="track-schedule">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-magnifying-glass"></i> Tracking & History</span>
+        <h2 class="section-title">Irrigation Tracking</h2>
+        <p class="section-subtitle">Track irrigation status by Schedule ID or filter by crop type and location.</p>
+      </div>
+
+      <!-- Quick Schedule ID Lookup -->
+      <div class="glass-card" style="margin-bottom: 2.5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
+        <h4 style="margin-bottom: 1rem;"><i class="fa-solid fa-id-card" style="color: var(--primary);"></i> Track Specific Schedule ID</h4>
+        <form id="trackForm" style="display: flex; gap: 1rem;">
+          <input type="text" id="trackScheduleId" class="form-control" placeholder="Enter Schedule ID (e.g. IRR-8921)" required>
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-search"></i> Track</button>
+        </form>
+        <div id="trackResult" style="margin-top: 1rem;"></div>
+      </div>
+
+      <!-- Schedules List Table -->
+      <div class="glass-card">
+        <div class="filter-bar">
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <h3><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> All Irrigation Schedules</h3>
+            <button onclick="App.exportCsv()" class="btn btn-sm btn-outline" title="Export Table Data as CSV">
+              <i class="fa-solid fa-file-csv"></i> Export CSV
+            </button>
+          </div>
+          
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div class="search-box">
+              <i class="fa-solid fa-search search-icon"></i>
+              <input type="text" id="searchSchedule" class="form-control" placeholder="Search by Farmer, Crop, Location...">
+            </div>
+
+            <select id="filterStatus" class="form-control" style="width: auto;">
+              <option value="ALL">All Statuses</option>
+              <option value="SCHEDULED">Scheduled</option>
+              <option value="IN PROGRESS">In Progress</option>
+              <option value="COMPLETED">Completed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Schedule ID</th>
+                <th>Farmer Name</th>
+                <th>Location</th>
+                <th>Crop Type</th>
+                <th>Moisture</th>
+                <th>Weather</th>
+                <th>Scheduled Date/Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="schedulesTbody">
+              <!-- Rendered dynamically by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Farmer Testimonials Section
+       ========================================================================== -->
+  <section style="background: rgba(0, 0, 0, 0.15);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-comments"></i> Real Impact</span>
+        <h2 class="section-title">Farmer Testimonials</h2>
+        <p class="section-subtitle">Hear how cloud-based precision scheduling improves yield and conserves water.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="glass-card testimonial-card">
+          <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+          <p>"The Cloud Irrigation System saved over 40% of electricity and water on my wheat farm. The automated moisture alerts prevent both underwatering and root decay!"</p>
+          <div class="farmer-profile">
+            <div class="farmer-avatar">RP</div>
+            <div>
+              <h4 style="font-size: 1rem;">Ramesh Patel</h4>
+              <p style="font-size: 0.85rem; color: var(--text-dim);">Wheat Farmer, Punjab</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card testimonial-card">
+          <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+          <p>"Being able to schedule and monitor paddy field valve status remotely from my mobile phone via AWS cloud IoT is a game changer for modern agriculture."</p>
+          <div class="farmer-profile">
+            <div class="farmer-avatar">SS</div>
+            <div>
+              <h4 style="font-size: 1rem;">Sunita Sharma</h4>
+              <p style="font-size: 0.85rem; color: var(--text-dim);">Rice Cultivator, Haryana</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card testimonial-card">
+          <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+          <p>"The Penman-Monteith ET0 calculation engine gives exact water requirement recommendations for my organic vegetable polyhouse."</p>
+          <div class="farmer-profile">
+            <div class="farmer-avatar">VS</div>
+            <div>
+              <h4 style="font-size: 1rem;">Vikram Singh</h4>
+              <p style="font-size: 0.85rem; color: var(--text-dim);">Horticulturist, Maharashtra</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       About Section
+       ========================================================================== -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-circle-info"></i> Cloud Architecture</span>
+        <h2 class="section-title">About the Cloud System</h2>
+        <p class="section-subtitle">Connecting physical IoT soil telemetry with serverless cloud algorithms.</p>
+      </div>
+
+      <div class="glass-card" style="padding: 3rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+          <div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary);">System Purpose & Vision</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1.25rem;">
+              Traditional irrigation relies on fixed timers, leading to massive water wastage during rains and crop stress during heatwaves. Our <strong>Cloud-Based Farm Irrigation Scheduling System</strong> solves this by streaming IoT sensor telemetry directly to cloud computing infrastructure.
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.75rem; color: var(--text-main);">
+              <li><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <strong>Serverless ET0 Analytics:</strong> AWS Lambda computes real-time crop water requirements.</li>
+              <li><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <strong>IoT Telemetry Hub:</strong> AWS IoT Core handles thousands of sensor payloads over TLS v1.3 MQTT.</li>
+              <li><i class="fa-solid fa-circle-check" style="color: var(--primary);"></i> <strong>NoSQL Database Storage:</strong> Amazon DynamoDB guarantees sub-10ms schedule lookup speeds.</li>
+            </ul>
+          </div>
+
+          <div style="background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 1.5rem;">
+            <h4 style="color: #fff; margin-bottom: 1rem;"><i class="fa-solid fa-diagram-project" style="color: var(--accent-cyan);"></i> Cloud Pipeline Flow</h4>
+            <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.9rem;">
+              <div style="padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: var(--radius-sm);">
+                1. <strong>ESP32 Field Node:</strong> Measures Soil Moisture %, Temp & Solar Irradiance
+              </div>
+              <div style="padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: var(--radius-sm);">
+                2. <strong>AWS IoT Core:</strong> Ingests encrypted MQTT telemetry JSON messages
+              </div>
+              <div style="padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: var(--radius-sm);">
+                3. <strong>Serverless Lambda:</strong> Computes Penman-Monteith Water Deficit & Triggers Valve
+              </div>
+              <div style="padding: 0.75rem; background: rgba(255,255,255,0.05); border-radius: var(--radius-sm);">
+                4. <strong>DynamoDB & Web UI:</strong> Persists schedules and presents real-time dashboard
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Contact Section
+       ========================================================================== -->
+  <section id="contact" style="background: rgba(0,0,0,0.2);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-envelope"></i> Get In Touch</span>
+        <h2 class="section-title">Contact Support & Engineers</h2>
+        <p class="section-subtitle">Have questions about setting up cloud sensors on your farm? Reach out anytime.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2.5rem;">
+        <div class="glass-card">
+          <h3 style="margin-bottom: 1.5rem;">Contact Info</h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <div class="brand-icon" style="width: 40px; height: 40px;"><i class="fa-solid fa-envelope"></i></div>
+              <div>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Email Us</p>
+                <p style="font-weight: 600;">support@agricloud-irrigation.org</p>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <div class="brand-icon" style="width: 40px; height: 40px;"><i class="fa-solid fa-phone"></i></div>
+              <div>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Call Support</p>
+                <p style="font-weight: 600;">+91 1800-AGRI-CLOUD</p>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <div class="brand-icon" style="width: 40px; height: 40px;"><i class="fa-solid fa-location-dot"></i></div>
+              <div>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">Cloud Operations Center</p>
+                <p style="font-weight: 600;">AgriTech Hub, Innovation Park</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div id="contactAlert"></div>
+          <form id="contactForm" class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="contactName">Your Name</label>
+              <input type="text" id="contactName" class="form-control" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contactEmail">Email Address</label>
+              <input type="email" id="contactEmail" class="form-control" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="contactMessage">Message</label>
+              <textarea id="contactMessage" class="form-control" rows="4" placeholder="How can our cloud team assist your farm?" required></textarea>
+            </div>
+            <div class="form-group full-width">
+              <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Admin Login Modal
+       ========================================================================== -->
+  <div id="adminModal" class="modal-overlay">
+    <div class="modal-content" style="max-width: 450px;">
+      <button class="modal-close" onclick="closeModal('adminModal')">&times;</button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <div class="brand-icon" style="margin: 0 auto 1rem auto; width: 50px; height: 50px; font-size: 1.5rem;">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <h2>Admin Authentication</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Manage and update all irrigation schedules</p>
+      </div>
+
+      <div id="adminLoginAlert"></div>
+
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label class="form-label" for="adminUser">Username</label>
+          <input type="text" id="adminUser" class="form-control" value="admin" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="adminPass">Password</label>
+          <input type="password" id="adminPass" class="form-control" value="admin123" required>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1rem;">Demo Credentials: Username: <code>admin</code> | Password: <code>admin123</code></p>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Cloud Architecture Inspector Modal
+       ========================================================================== -->
+  <div id="cloudArchModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('cloudArchModal')">&times;</button>
+      <h2 style="margin-bottom: 0.5rem;"><i class="fa-solid fa-network-wired" style="color: var(--primary);"></i> Cloud Infrastructure Inspector</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Live simulated MQTT Telemetry, Serverless Executions & Database Records</p>
+
+      <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+        <button id="archTabMqtt" onclick="App.switchArchTab('mqtt')" class="btn btn-sm btn-primary">MQTT JSON Feed</button>
+        <button id="archTabCost" onclick="App.switchArchTab('cost')" class="btn btn-sm btn-outline">Cloud Cost Breakdown</button>
+        <button id="archTabLambda" onclick="App.switchArchTab('lambda')" class="btn btn-sm btn-outline">AWS Lambda Function</button>
+      </div>
+
+      <div class="code-box" id="liveMqttJson">
+        // Waiting for MQTT stream...
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       AI Master Prompt Generator Modal
+       ========================================================================== -->
+  <div id="promptGeneratorModal" class="modal-overlay">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('promptGeneratorModal')">&times;</button>
+      <h2 style="margin-bottom: 0.5rem;"><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary);"></i> AI Master Prompt Generator</h2>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Copy optimized prompts to generate project reports, viva Q&As, or AWS code extensions.</p>
+
+      <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: var(--primary);">1. Full Project Build Master Prompt</h4>
+            <button onclick="copyPromptToClipboard('buildProject')" class="btn btn-sm btn-outline"><i class="fa-solid fa-copy"></i> Copy Prompt</button>
+          </div>
+          <div class="code-box" style="max-height: 120px;">Act as a Senior Cloud Solutions Architect & Full-Stack Developer. Build a comprehensive, production-ready "Cloud-Based Farm Irrigation Scheduling System" web application for a Cloud Computing course project...</div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: var(--accent-cyan);">2. Technical Project Report & Documentation Prompt</h4>
+            <button onclick="copyPromptToClipboard('generateReport')" class="btn btn-sm btn-outline"><i class="fa-solid fa-copy"></i> Copy Prompt</button>
+          </div>
+          <div class="code-box" style="max-height: 120px;">Act as a Cloud Computing Academic Professor. Create a comprehensive 10-page Technical Project Report for the "Cloud-Based Farm Irrigation Scheduling System" covering ET0 Penman-Monteith, AWS IoT Core, and DynamoDB schemas...</div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <h4 style="color: var(--accent-amber);">3. Viva Exam & Defense Q&A Prompt</h4>
+            <button onclick="copyPromptToClipboard('vivaPreparation')" class="btn btn-sm btn-outline"><i class="fa-solid fa-copy"></i> Copy Prompt</button>
+          </div>
+          <div class="code-box" style="max-height: 120px;">Act as an Expert Examiner for a Cloud Computing Viva Exam. Provide a list of 15 high-yield viva questions with detailed model answers for defending the "Cloud-Based Farm Irrigation Scheduling System" project...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Footer
+       ========================================================================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="#home" class="nav-brand" style="margin-bottom: 1rem;">
+            <div class="brand-icon"><i class="fa-solid fa-cloud-sun-rain"></i></div>
+            <span>AgriCloud <span class="gradient-text">Irrigate</span></span>
+          </a>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            A Cloud Computing Subject Project demonstrating IoT telemetry integration, serverless evapotranspiration processing, dynamic smart irrigation scheduling, and precision agriculture.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#monitor-soil">Monitor Soil</a></li>
+            <li><a href="#schedule-irrigation">Schedule Irrigation</a></li>
+            <li><a href="#track-schedule">Track Schedule</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>System Modules</h4>
+          <ul class="footer-links">
+            <li><a href="#about">Cloud Architecture</a></li>
+            <li><a href="#contact">Support Contact</a></li>
+            <li><a href="javascript:void(0)" onclick="openModal('adminModal')">Admin Panel</a></li>
+            <li><a href="javascript:void(0)" onclick="openModal('promptGeneratorModal')">Master AI Prompt</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Cloud Computing Tech Stack</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+            HTML5 • CSS3 Glassmorphism • JavaScript ES6 • AWS IoT Core MQTT Payload Simulator • DynamoDB Storage LocalStorage Engine
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Cloud-Based Farm Irrigation Scheduling System. Built for Cloud Computing Academic Excellence.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Imports -->
+  <script src="./js/cloud-sim.js"></script>
+  <script src="./js/charts.js"></script>
+  <script src="./js/prompt-generator.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
