@@ -7,7 +7,1016 @@
   <meta name="description" content="A state-of-the-art Cloud-Based Farm Irrigation Scheduling System featuring IoT telemetry simulation, Penman-Monteith ET0 calculation, smart automated scheduling, and cloud analytics.">
   
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="./css/styles.css">
+  <style>
+/* ==========================================================================
+   Cloud-Based Farm Irrigation Scheduling System - Master Stylesheet
+   Design System: Dark Emerald / Cyan Glassmorphism Theme
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Color Palette */
+  --bg-dark: #091311;
+  --bg-card: rgba(16, 32, 28, 0.7);
+  --bg-card-hover: rgba(22, 44, 38, 0.85);
+  --bg-glass: rgba(255, 255, 255, 0.03);
+  --border-glass: rgba(46, 204, 113, 0.18);
+  --border-focus: #2ecc71;
+  
+  --primary: #2ecc71;
+  --primary-glow: rgba(46, 204, 113, 0.4);
+  --primary-dark: #27ae60;
+  --accent-cyan: #00f2fe;
+  --accent-blue: #4facfe;
+  --accent-amber: #f39c12;
+  --accent-danger: #e74c3c;
+  
+  --text-main: #f0fdf4;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --shadow-glow: 0 8px 32px 0 rgba(0, 255, 128, 0.12);
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+  
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset & Base Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(46, 204, 113, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 65%, rgba(0, 242, 254, 0.06) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(39, 174, 96, 0.05) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Typography Utility */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--accent-cyan);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #2ecc71 0%, #00f2fe 50%, #4facfe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Layout Elements */
+.container {
+  width: 90%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+section {
+  padding: 5rem 0;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.section-tag {
+  display: inline-block;
+  padding: 0.35rem 1rem;
+  background: rgba(46, 204, 113, 0.12);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-full);
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+/* Header & Navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(9, 19, 17, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-glass);
+  transition: var(--transition);
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, var(--primary), var(--accent-cyan));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  position: relative;
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #ffffff;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
+  transition: var(--transition);
+  border-radius: 2px;
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Button Component */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: #051a0e;
+  box-shadow: 0 4px 20px rgba(46, 204, 113, 0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5);
+  background: linear-gradient(135deg, #34d399, #2ecc71);
+  color: #021208;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: rgba(46, 204, 113, 0.15);
+  border-color: var(--primary);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-glass);
+  color: var(--primary);
+}
+
+.btn-outline:hover {
+  background: var(--primary);
+  color: #091311;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn-danger {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #ff6b6b;
+}
+
+.btn-danger:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* Glass Card */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+}
+
+.glass-card:hover {
+  border-color: rgba(46, 204, 113, 0.35);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Hero Section */
+.hero-section {
+  padding-top: 10rem;
+  padding-bottom: 6rem;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: -1px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.hero-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-glass);
+}
+
+.stat-item h3 {
+  font-size: 2rem;
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.stat-item p {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hero-visual {
+  position: relative;
+}
+
+.cloud-telemetry-badge {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background: rgba(15, 30, 26, 0.9);
+  border: 1px solid var(--primary);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 0 20px var(--primary-glow);
+  z-index: 10;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--primary);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}
+
+/* Farm Overview & Telemetry Grid */
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.sensor-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.sensor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.sensor-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.sensor-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.sensor-unit {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin: 0.75rem 0;
+  position: relative;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
+  background: linear-gradient(90deg, var(--primary), var(--accent-cyan));
+}
+
+.progress-bar-fill.warning {
+  background: linear-gradient(90deg, var(--accent-amber), #e67e22);
+}
+
+.progress-bar-fill.danger {
+  background: linear-gradient(90deg, var(--accent-danger), #c0392b);
+}
+
+.zone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.zone-card {
+  border-left: 4px solid var(--primary);
+}
+
+.zone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.zone-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-active {
+  background: rgba(46, 204, 113, 0.15);
+  color: var(--primary);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.badge-idle {
+  background: rgba(148, 163, 184, 0.15);
+  color: var(--text-muted);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.zone-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.detail-label {
+  color: var(--text-dim);
+}
+
+.detail-value {
+  font-weight: 600;
+  text-align: right;
+}
+
+/* Irrigation Form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.25);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232ecc71' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+select.form-control option {
+  background-color: #0d1e19;
+  color: #fff;
+}
+
+.range-slider-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.range-slider-wrap input[type="range"] {
+  flex: 1;
+  accent-color: var(--primary);
+}
+
+.range-val-badge {
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid var(--primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  color: var(--primary);
+  font-weight: 700;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Alert Notification */
+.alert-box {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.alert-success {
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid rgba(46, 204, 113, 0.4);
+  color: #2ecc71;
+}
+
+.alert-danger {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  color: #ff6b6b;
+}
+
+.alert-info {
+  background: rgba(0, 242, 254, 0.15);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  color: #00f2fe;
+}
+
+/* Schedule Table & Tracking */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.data-table th {
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--text-muted);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.data-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+}
+
+.data-table tbody tr {
+  transition: var(--transition);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-scheduled {
+  background: rgba(243, 156, 18, 0.15);
+  border: 1px solid rgba(243, 156, 18, 0.4);
+  color: #f39c12;
+}
+
+.status-inprogress {
+  background: rgba(0, 242, 254, 0.15);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  color: #00f2fe;
+}
+
+.status-completed {
+  background: rgba(46, 204, 113, 0.15);
+  border: 1px solid rgba(46, 204, 113, 0.4);
+  color: #2ecc71;
+}
+
+/* Filter Controls */
+.filter-bar {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-box input {
+  padding-left: 2.75rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+}
+
+/* Recommendations Card */
+.ai-recommendation-box {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(0, 242, 254, 0.08));
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.ai-icon-pulse {
+  width: 48px;
+  height: 48px;
+  background: var(--primary);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #051a0e;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+/* Admin Dashboard Tab & Modal */
+.admin-badge {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #ff6b6b;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Testimonials */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.testimonial-card {
+  position: relative;
+}
+
+.quote-icon {
+  font-size: 2.5rem;
+  color: rgba(46, 204, 113, 0.2);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.farmer-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.farmer-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent-cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #051a0e;
+  font-size: 1.2rem;
+}
+
+/* Architecture Inspector Modal / Drawer */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-content {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 850px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: var(--transition);
+}
+
+.modal-close:hover {
+  background: var(--accent-danger);
+}
+
+/* Prompt Generator Section Styling */
+.code-box {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.88rem;
+  color: #a7f3d0;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 350px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+}
+
+/* Footer */
+footer {
+  background: rgba(5, 12, 10, 0.95);
+  border-top: 1px solid var(--border-glass);
+  padding: 4rem 0 2rem 0;
+  margin-top: 4rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 992px) {
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-col h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+  color: #fff;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .hero-buttons {
+    justify-content: center;
+  }
+  
+  .hero-stats-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: rgba(9, 19, 17, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    transition: var(--transition);
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content h1 {
+    font-size: 2.4rem;
+  }
+
+  .section-title {
+    font-size: 1.9rem;
+  }
+
+  .hero-stats-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
   
   <!-- Feather / Font Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -672,9 +1681,1015 @@
   </footer>
 
   <!-- Script Imports -->
-  <script src="./js/cloud-sim.js"></script>
-  <script src="./js/charts.js"></script>
-  <script src="./js/prompt-generator.js"></script>
-  <script src="./js/app.js"></script>
+  <script>
+/* ==========================================================================
+   Cloud-Based Farm Irrigation Scheduling System - Cloud & IoT Telemetry Simulator
+   Simulates AWS IoT Core / Azure IoT Hub MQTT Telemetry & Serverless Processing
+   ========================================================================== */
+
+class CloudTelemetrySimulator {
+  constructor() {
+    this.telemetryData = {
+      moisture: 38,
+      temperature: 28.5,
+      humidity: 62,
+      solarRadiation: 780, // W/m2
+      rainProbability: 15, // %
+      flowRate: 0.0, // L/min
+      activeValves: 1,
+      totalValves: 4
+    };
+
+    this.cloudMetrics = {
+      messagesProcessed: 142890,
+      lambdaInvocations: 48920,
+      dynamoDbWrites: 142890,
+      s3StorageMB: 482.4,
+      avgLatencyMs: 24,
+      estimatedMonthlyCost: 4.85 // USD
+    };
+
+    this.zones = [
+      { id: 'zone-1', name: 'North Sector (Rice)', crop: 'Rice', moisture: 42, threshold: 40, status: 'Idle', valve: 'OFF', lastIrrigated: 'Today, 06:00 AM' },
+      { id: 'zone-2', name: 'South Sector (Wheat)', crop: 'Wheat', moisture: 28, threshold: 35, status: 'Needs Water', valve: 'ON', lastIrrigated: 'Yesterday, 05:30 PM' },
+      { id: 'zone-3', name: 'East Orchard (Citrus)', crop: 'Vegetables', moisture: 54, threshold: 45, status: 'Optimal', valve: 'OFF', lastIrrigated: '2 Days ago' },
+      { id: 'zone-4', name: 'Polyhouse A (Microgreens)', crop: 'Maize', moisture: 62, threshold: 50, status: 'Optimal', valve: 'OFF', lastIrrigated: 'Today, 08:15 AM' }
+    ];
+
+    this.listeners = [];
+    this.intervalId = null;
+  }
+
+  start() {
+    if (this.intervalId) return;
+    
+    // Simulate real-time sensor fluctuation every 3 seconds
+    this.intervalId = setInterval(() => {
+      this.updateSimulation();
+    }, 3000);
+  }
+
+  stop() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
+    }
+  }
+
+  updateSimulation() {
+    // Fluctuate soil moisture slightly based on active valves
+    this.zones.forEach(zone => {
+      if (zone.valve === 'ON') {
+        zone.moisture = Math.min(100, zone.moisture + Math.floor(Math.random() * 2 + 1));
+        if (zone.moisture >= 75) {
+          zone.valve = 'OFF';
+          zone.status = 'Optimal';
+          zone.lastIrrigated = 'Just now (Auto-Closed)';
+        }
+      } else {
+        // Natural moisture evaporation
+        if (Math.random() > 0.4) {
+          zone.moisture = Math.max(10, zone.moisture - (Math.random() * 0.4));
+        }
+        if (zone.moisture < zone.threshold) {
+          zone.status = 'Needs Water';
+        } else {
+          zone.status = 'Optimal';
+        }
+      }
+      zone.moisture = Math.round(zone.moisture * 10) / 10;
+    });
+
+    // Update global telemetry averages
+    const totalMoisture = this.zones.reduce((sum, z) => sum + z.moisture, 0);
+    this.telemetryData.moisture = Math.round((totalMoisture / this.zones.length) * 10) / 10;
+    this.telemetryData.temperature = Math.round((28 + (Math.random() * 1.5 - 0.75)) * 10) / 10;
+    this.telemetryData.humidity = Math.round((60 + (Math.random() * 4 - 2)) * 10) / 10;
+
+    // Update cloud metric counters
+    this.cloudMetrics.messagesProcessed += 4;
+    this.cloudMetrics.lambdaInvocations += 2;
+    this.cloudMetrics.dynamoDbWrites += 4;
+    this.cloudMetrics.s3StorageMB = Math.round((this.cloudMetrics.s3StorageMB + 0.002) * 1000) / 1000;
+    this.cloudMetrics.avgLatencyMs = Math.floor(18 + Math.random() * 12);
+
+    this.notifyListeners();
+  }
+
+  toggleZoneValve(zoneId) {
+    const zone = this.zones.find(z => z.id === zoneId);
+    if (zone) {
+      zone.valve = zone.valve === 'ON' ? 'OFF' : 'ON';
+      if (zone.valve === 'ON') {
+        zone.status = 'Irrigating...';
+        zone.lastIrrigated = 'Started Just Now';
+      } else {
+        zone.status = zone.moisture < zone.threshold ? 'Needs Water' : 'Optimal';
+      }
+      this.notifyListeners();
+      return zone;
+    }
+    return null;
+  }
+
+  generateMqttPayload() {
+    return JSON.stringify({
+      deviceId: "ESP32-FARM-GATEWAY-01",
+      timestamp: new Date().toISOString(),
+      payload: {
+        sensors: {
+          soilMoisturePct: this.telemetryData.moisture,
+          ambientTempC: this.telemetryData.temperature,
+          humidityPct: this.telemetryData.humidity,
+          solarRadWM2: this.telemetryData.solarRadiation,
+          rainRateMmHr: 0.0
+        },
+        cloudSyncState: "SYNCED_OK",
+        valves: this.zones.map(z => ({ zoneId: z.id, state: z.valve }))
+      }
+    }, null, 2);
+  }
+
+  generateCostBreakdown() {
+    return JSON.stringify({
+      cloudProvider: "AWS (US-East-1)",
+      monthlyResourceBilling: {
+        awsIotCoreMsgIngestion: `$${(this.cloudMetrics.messagesProcessed * 0.000001).toFixed(4)} (1M Msgs = $1.00)`,
+        awsLambdaExecutions: `$${(this.cloudMetrics.lambdaInvocations * 0.0000002).toFixed(4)} (128MB Memory)`,
+        amazonDynamoDbStorage: `$${(0.25).toFixed(2)} (Standard RCU/WCU)`,
+        amazonS3TelemetryArchive: `$${(this.cloudMetrics.s3StorageMB * 0.000023).toFixed(4)} (Standard Storage)`,
+        totalEstimatedMonthlyBill: `$${this.cloudMetrics.estimatedMonthlyCost.toFixed(2)} USD`
+      },
+      efficiencyNote: "Smart ET0 Serverless scheduling reduces water & electricity costs by 38.5% compared to legacy timers."
+    }, null, 2);
+  }
+
+  generateLambdaCode() {
+    return `# AWS Lambda Python 3.11 - Serverless ET0 Irrigation Handler
+import json
+import boto3
+import math
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('IrrigationSchedules')
+
+def lambda_handler(event, context):
+    payload = event['payload']['sensors']
+    moisture = payload['soilMoisturePct']
+    temp = payload['ambientTempC']
+    solar_rad = payload['solarRadWM2']
+    
+    # Penman-Monteith Simplified ET0 calculation (mm/day)
+    et0 = 0.0023 * (temp + 17.8) * math.sqrt(abs(temp)) * (solar_rad * 0.082)
+    
+    should_irrigate = moisture < 35.0
+    action = "TRIGGER_VALVE_ON" if should_irrigate else "MAINTAIN_IDLE"
+    
+    # Persist record to DynamoDB
+    table.put_item(Item={
+        'FarmId': 'FARM_01',
+        'Timestamp': event['timestamp'],
+        'MoisturePct': str(moisture),
+        'ET0_Calculated': str(round(et0, 2)),
+        'Action': action
+    })
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps({'ET0': round(et0, 2), 'Action': action})
+    }`;
+  }
+
+  subscribe(callback) {
+    this.listeners.push(callback);
+  }
+
+  notifyListeners() {
+    this.listeners.forEach(cb => cb(this.telemetryData, this.zones, this.cloudMetrics));
+  }
+}
+
+// Global instance
+const cloudSim = new CloudTelemetrySimulator();
+
+  </script>
+  <script>
+/* ==========================================================================
+   Cloud-Based Farm Irrigation Scheduling System - Canvas Charting Utility
+   High-performance self-contained HTML5 Canvas Renderer for Telemetry Graphs
+   ========================================================================== */
+
+class FarmChartsEngine {
+  constructor() {
+    this.moistureHistory = [35, 34, 32, 30, 28, 27, 45, 52, 50, 48, 45, 42, 40, 38, 37, 35, 33, 48, 55, 50, 46, 42, 40, 38];
+    this.hours = ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'];
+  }
+
+  pushRealtimeValue(val) {
+    this.moistureHistory.shift();
+    this.moistureHistory.push(val);
+  }
+
+  renderMoistureChart(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    // Set display resolution according to DPR
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    const width = rect.width;
+    const height = rect.height;
+
+    // Clear background
+    ctx.clearRect(0, 0, width, height);
+
+    // Padding
+    const padding = { top: 30, right: 30, bottom: 40, left: 45 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+
+    // Grid lines
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+    ctx.lineWidth = 1;
+    for (let y = 0; y <= 100; y += 25) {
+      const yPos = padding.top + chartHeight - (y / 100) * chartHeight;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, yPos);
+      ctx.lineTo(width - padding.right, yPos);
+      ctx.stroke();
+
+      // Axis label
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.fillText(`${y}%`, 10, yPos + 4);
+    }
+
+    // Threshold line (35%)
+    const thresholdY = padding.top + chartHeight - (35 / 100) * chartHeight;
+    ctx.strokeStyle = 'rgba(243, 156, 18, 0.5)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    ctx.moveTo(padding.left, thresholdY);
+    ctx.lineTo(width - padding.right, thresholdY);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#f39c12';
+    ctx.fillText('Crit Threshold (35%)', width - padding.right - 110, thresholdY - 6);
+
+    // Plot moisture line curve
+    const points = this.moistureHistory.map((val, idx) => {
+      const x = padding.left + (idx / (this.moistureHistory.length - 1)) * chartWidth;
+      const y = padding.top + chartHeight - (val / 100) * chartHeight;
+      return { x, y, val };
+    });
+
+    // Draw gradient fill under line
+    const gradient = ctx.createLinearGradient(0, padding.top, 0, height - padding.bottom);
+    gradient.addColorStop(0, 'rgba(46, 204, 113, 0.35)');
+    gradient.addColorStop(1, 'rgba(46, 204, 113, 0.0)');
+
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, height - padding.bottom);
+    points.forEach(pt => ctx.lineTo(pt.x, pt.y));
+    ctx.lineTo(points[points.length - 1].x, height - padding.bottom);
+    ctx.closePath();
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    // Draw main stroke line
+    ctx.strokeStyle = '#2ecc71';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+      // Smooth quadratic bezier curves
+      const xc = (points[i].x + points[i - 1].x) / 2;
+      const yc = (points[i].y + points[i - 1].y) / 2;
+      ctx.quadraticCurveTo(points[i - 1].x, points[i - 1].y, xc, yc);
+    }
+    ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
+    ctx.stroke();
+
+    // Draw data points
+    points.forEach((pt, idx) => {
+      if (idx % 3 === 0) { // draw dot every 3 hours
+        ctx.fillStyle = '#091311';
+        ctx.strokeStyle = '#00f2fe';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+    });
+  }
+
+  renderWaterSavedChart(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    const width = rect.width;
+    const height = rect.height;
+
+    ctx.clearRect(0, 0, width, height);
+
+    const padding = { top: 30, right: 20, bottom: 40, left: 55 };
+    const chartWidth = width - padding.left - padding.right;
+    const chartHeight = height - padding.top - padding.bottom;
+
+    const categories = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const traditionalUsage = [1200, 1150, 1300, 1250, 1400, 1350, 1300]; // Liters
+    const cloudSmartUsage = [750, 680, 820, 710, 890, 790, 740]; // Liters saved via ET0 cloud AI
+
+    const maxVal = 1600;
+    const barGroupWidth = chartWidth / categories.length;
+    const barWidth = barGroupWidth * 0.32;
+
+    // Y-Axis Grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+    for (let y = 0; y <= maxVal; y += 400) {
+      const yPos = padding.top + chartHeight - (y / maxVal) * chartHeight;
+      ctx.beginPath();
+      ctx.moveTo(padding.left, yPos);
+      ctx.lineTo(width - padding.right, yPos);
+      ctx.stroke();
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.fillText(`${y} L`, 10, yPos + 4);
+    }
+
+    // Render Bars
+    categories.forEach((cat, idx) => {
+      const groupX = padding.left + idx * barGroupWidth;
+
+      // Traditional Bar
+      const tradHeight = (traditionalUsage[idx] / maxVal) * chartHeight;
+      const tradX = groupX + barGroupWidth * 0.15;
+      const tradY = padding.top + chartHeight - tradHeight;
+
+      ctx.fillStyle = 'rgba(231, 76, 60, 0.6)';
+      ctx.beginPath();
+      ctx.roundRect(tradX, tradY, barWidth, tradHeight, [4, 4, 0, 0]);
+      ctx.fill();
+
+      // Smart Cloud Bar
+      const smartHeight = (cloudSmartUsage[idx] / maxVal) * chartHeight;
+      const smartX = tradX + barWidth + 6;
+      const smartY = padding.top + chartHeight - smartHeight;
+
+      ctx.fillStyle = '#2ecc71';
+      ctx.beginPath();
+      ctx.roundRect(smartX, smartY, barWidth, smartHeight, [4, 4, 0, 0]);
+      ctx.fill();
+
+      // Category Label
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(cat, groupX + barGroupWidth / 2, height - 12);
+    });
+
+    // Legend
+    ctx.textAlign = 'left';
+    ctx.fillStyle = 'rgba(231, 76, 60, 0.9)';
+    ctx.fillRect(width - 240, 10, 12, 12);
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText('Fixed Schedule', width - 222, 20);
+
+    ctx.fillStyle = '#2ecc71';
+    ctx.fillRect(width - 130, 10, 12, 12);
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText('Cloud AI Smart', width - 112, 20);
+  }
+}
+
+const farmCharts = new FarmChartsEngine();
+
+  </script>
+  <script>
+/* ==========================================================================
+   Cloud-Based Farm Irrigation Scheduling System - AI Master Prompt Generator
+   Provides copyable optimized prompts for building, documenting, and presenting
+   ========================================================================== */
+
+const MasterPrompts = {
+  buildProject: `Act as a Senior Cloud Solutions Architect & Full-Stack Developer. Build a comprehensive, production-ready "Cloud-Based Farm Irrigation Scheduling System" web application for a Cloud Computing course project. 
+
+REQUIREMENTS:
+1. Frontend Stack: HTML5, CSS3 (Dark Emerald Glassmorphism, Responsive CSS Grid/Flexbox), and Vanilla JavaScript (ES6+).
+2. Architecture Simulation:
+   - Real-time IoT sensor telemetry feed (Soil Moisture %, Soil Temp, Solar Radiation, Air Humidity).
+   - Serverless Cloud engine calculating Evapotranspiration (ET0 Penman-Monteith equation).
+   - Cloud Telemetry Simulator showcasing AWS IoT Core MQTT payload JSON streams, AWS Lambda trigger logs, and DynamoDB database records.
+3. Features:
+   - Hero section with key statistics and live connection status.
+   - Farm Sector Grid with individual valve toggles (Drip/Sprinkler) and soil moisture progress indicators.
+   - Smart Irrigation Scheduling Form with client-side validation, localStorage persistence, and auto-generated Schedule IDs.
+   - Searchable & Filterable Schedule Tracker (by Crop Type, Location, Status).
+   - Admin Panel with login authentication to manage, update, and complete irrigation tasks.
+   - Farmer Testimonials, About, and Contact sections with submission feedback.
+   - Dynamic Canvas visual charts for 24-hour soil moisture curves and water savings metrics.`,
+
+  generateReport: `Act as a Cloud Computing Academic Professor. Create a comprehensive 10-page Technical Project Report for the "Cloud-Based Farm Irrigation Scheduling System".
+
+Include the following sections:
+1. ABSTRACT & INTRODUCTION: Problem statement of agricultural water wastage and cloud computing solution.
+2. SYSTEM ARCHITECTURE: Detailed breakdown of Edge IoT Sensors (ESP32) -> AWS IoT Core -> AWS Lambda (ET0 Serverless calculation) -> DynamoDB -> S3 Long-term Telemetry Archive -> Single Page Web Dashboard.
+3. MATHEMATICAL MODEL: Formulate the Penman-Monteith Evapotranspiration equation (ET0 = [0.408*Delta*(Rn-G) + gamma*(900/(T+273))*u2*(es-ea)] / [Delta + gamma*(1+0.34*u2)]).
+4. DATABASE SCHEMA: DynamoDB table definition (Partition Key: FarmId, Sort Key: Timestamp, Attributes: SoilMoisture, ValveState, WeatherCondition).
+5. CLOUD SECURITY & COST ANALYSIS: IAM role policies, MQTT TLS v1.3 encryption, and monthly cost calculation ($4.85/month for 100,000 IoT messages).
+6. CONCLUSION & FUTURE SCOPE: Machine learning integration for satellite NDVI weather predictive modeling.`,
+
+  vivaPreparation: `Act as an Expert Examiner for a Cloud Computing Viva Exam. Provide a list of 15 high-yield viva questions with detailed model answers for defending the "Cloud-Based Farm Irrigation Scheduling System" project.
+
+Cover key topics:
+- Why choose Cloud-Based Irrigation over traditional timer-based microcontrollers?
+- How does the system handle network disconnection at the farm (Edge Buffering vs Cloud Sync)?
+- What is the advantage of Serverless Lambda execution for irrigation triggers compared to EC2 virtual servers?
+- How is security guaranteed between ESP32 field sensors and AWS IoT Core (X.509 Certificates)?
+- Explain the role of Evapotranspiration (ET0) in dynamic schedule calculation.`,
+
+  awsIntegration: `Provide a step-by-step technical guide with Node.js and AWS SDK v3 code snippets to connect this HTML/JS frontend to live AWS Cloud services.
+
+Step 1: Set up AWS IoT Core Topic 'farm/telemetry/pub' with MQTT over WebSockets.
+Step 2: Write an AWS Lambda Python function triggered by IoT Core to compute ET0 and store records in DynamoDB 'IrrigationSchedules'.
+Step 3: Create an AWS API Gateway HTTP API endpoint to allow the web frontend to GET schedules and POST manual valve overrides securely via Cognito JWT tokens.`
+};
+
+function copyPromptToClipboard(promptKey) {
+  const text = MasterPrompts[promptKey];
+  if (text) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToastNotification('Prompt copied to clipboard successfully!');
+    }).catch(err => {
+      console.error('Failed to copy prompt: ', err);
+    });
+  }
+}
+
+  </script>
+  <script>
+/* ==========================================================================
+   Cloud-Based Farm Irrigation Scheduling System - Main Application Logic
+   Handles UI Interactions, Form Validations, LocalStorage, Admin Panel, Filters
+   ========================================================================== */
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Application State
+  App.init();
+});
+
+const App = {
+  schedules: [],
+  isAdminLoggedIn: false,
+  activeArchTab: 'mqtt',
+
+  init() {
+    this.loadSchedules();
+    this.setupEventListeners();
+    this.initRealtimeTelemetry();
+    this.renderSchedulesTable();
+    this.updateStatsCounters();
+    
+    // Initial chart rendering
+    setTimeout(() => {
+      farmCharts.renderMoistureChart('moistureChart');
+      farmCharts.renderWaterSavedChart('waterSavedChart');
+    }, 200);
+
+    window.addEventListener('resize', () => {
+      farmCharts.renderMoistureChart('moistureChart');
+      farmCharts.renderWaterSavedChart('waterSavedChart');
+    });
+  },
+
+  loadSchedules() {
+    const stored = localStorage.getItem('cloud_irrigation_schedules');
+    if (stored) {
+      try {
+        this.schedules = JSON.parse(stored);
+      } catch (e) {
+        this.schedules = [];
+      }
+    }
+    
+    // Seed default sample schedules if empty
+    if (!this.schedules || this.schedules.length === 0) {
+      this.schedules = [
+        {
+          id: 'IRR-8921',
+          farmerName: 'Ramesh Patel',
+          location: 'North Sector Block A',
+          cropType: 'Wheat',
+          moistureLevel: 28,
+          weatherCondition: 'Sunny',
+          dateTime: '2026-09-06T06:00',
+          status: 'Scheduled',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'IRR-8922',
+          farmerName: 'Sunita Sharma',
+          location: 'East Orchard Sector 2',
+          cropType: 'Rice',
+          moistureLevel: 42,
+          weatherCondition: 'Cloudy',
+          dateTime: '2026-09-05T18:30',
+          status: 'In Progress',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'IRR-8923',
+          farmerName: 'Vikram Singh',
+          location: 'Greenhouse Sector 4',
+          cropType: 'Vegetables',
+          moistureLevel: 55,
+          weatherCondition: 'Rainy',
+          dateTime: '2026-09-04T07:00',
+          status: 'Completed',
+          createdAt: new Date().toISOString()
+        }
+      ];
+      this.saveSchedules();
+    }
+  },
+
+  saveSchedules() {
+    localStorage.setItem('cloud_irrigation_schedules', JSON.stringify(this.schedules));
+    this.renderSchedulesTable();
+    this.updateStatsCounters();
+  },
+
+  setupEventListeners() {
+    // Navigation Mobile Menu Toggle
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+      });
+
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('active');
+        });
+      });
+    }
+
+    // Moisture Range Slider Sync
+    const moistureInput = document.getElementById('soilMoisture');
+    const moistureValBadge = document.getElementById('moistureValBadge');
+    if (moistureInput && moistureValBadge) {
+      moistureInput.addEventListener('input', (e) => {
+        moistureValBadge.textContent = `${e.target.value}%`;
+        this.updateFormRecommendation();
+      });
+    }
+
+    const cropSelect = document.getElementById('cropType');
+    if (cropSelect) {
+      cropSelect.addEventListener('change', () => this.updateFormRecommendation());
+    }
+
+    // Form Submission
+    const scheduleForm = document.getElementById('irrigationForm');
+    if (scheduleForm) {
+      scheduleForm.addEventListener('submit', (e) => this.handleScheduleSubmit(e));
+    }
+
+    // Search and Filters
+    const searchInput = document.getElementById('searchSchedule');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => this.renderSchedulesTable());
+    }
+
+    const statusFilter = document.getElementById('filterStatus');
+    if (statusFilter) {
+      statusFilter.addEventListener('change', () => this.renderSchedulesTable());
+    }
+
+    // Tracking Lookup Form
+    const trackForm = document.getElementById('trackForm');
+    if (trackForm) {
+      trackForm.addEventListener('submit', (e) => this.handleTrackLookup(e));
+    }
+
+    // Admin Login Modal
+    const adminLoginBtn = document.getElementById('adminLoginBtn');
+    if (adminLoginBtn) {
+      adminLoginBtn.addEventListener('click', () => this.toggleAdminModal(true));
+    }
+
+    const adminLoginForm = document.getElementById('adminLoginForm');
+    if (adminLoginForm) {
+      adminLoginForm.addEventListener('submit', (e) => this.handleAdminLogin(e));
+    }
+
+    // Contact Form
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => this.handleContactSubmit(e));
+    }
+  },
+
+  initRealtimeTelemetry() {
+    cloudSim.subscribe((telemetry, zones, metrics) => {
+      // Update UI Telemetry Cards
+      const moistureEl = document.getElementById('telemetryMoisture');
+      const tempEl = document.getElementById('telemetryTemp');
+      const humidityEl = document.getElementById('telemetryHumidity');
+      const solarEl = document.getElementById('telemetrySolar');
+      const cloudMsgEl = document.getElementById('cloudMsgCount');
+
+      if (moistureEl) moistureEl.textContent = `${telemetry.moisture}%`;
+      if (tempEl) tempEl.textContent = `${telemetry.temperature}°C`;
+      if (humidityEl) humidityEl.textContent = `${telemetry.humidity}%`;
+      if (solarEl) solarEl.textContent = `${telemetry.solarRadiation} W/m²`;
+      if (cloudMsgEl) cloudMsgEl.textContent = metrics.messagesProcessed.toLocaleString();
+
+      // Update progress bar
+      const moistureProgress = document.getElementById('telemetryMoistureProgress');
+      if (moistureProgress) {
+        moistureProgress.style.width = `${telemetry.moisture}%`;
+        if (telemetry.moisture < 30) {
+          moistureProgress.className = 'progress-bar-fill danger';
+        } else if (telemetry.moisture < 40) {
+          moistureProgress.className = 'progress-bar-fill warning';
+        } else {
+          moistureProgress.className = 'progress-bar-fill';
+        }
+      }
+
+      // Render zones grid
+      this.renderZonesGrid(zones);
+
+      // Update Live Box in Cloud Architecture Inspector if open
+      this.updateArchInspectorBox();
+
+      // Update canvas real-time point
+      farmCharts.pushRealtimeValue(telemetry.moisture);
+      farmCharts.renderMoistureChart('moistureChart');
+    });
+
+    cloudSim.start();
+  },
+
+  switchArchTab(tab) {
+    this.activeArchTab = tab;
+    
+    ['archTabMqtt', 'archTabCost', 'archTabLambda'].forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) btn.className = 'btn btn-sm btn-outline';
+    });
+
+    if (tab === 'mqtt') {
+      const b = document.getElementById('archTabMqtt');
+      if (b) b.className = 'btn btn-sm btn-primary';
+    } else if (tab === 'cost') {
+      const b = document.getElementById('archTabCost');
+      if (b) b.className = 'btn btn-sm btn-primary';
+    } else if (tab === 'lambda') {
+      const b = document.getElementById('archTabLambda');
+      if (b) b.className = 'btn btn-sm btn-primary';
+    }
+
+    this.updateArchInspectorBox();
+  },
+
+  updateArchInspectorBox() {
+    const box = document.getElementById('liveMqttJson');
+    if (!box) return;
+
+    if (this.activeArchTab === 'mqtt') {
+      box.textContent = cloudSim.generateMqttPayload();
+    } else if (this.activeArchTab === 'cost') {
+      box.textContent = cloudSim.generateCostBreakdown();
+    } else if (this.activeArchTab === 'lambda') {
+      box.textContent = cloudSim.generateLambdaCode();
+    }
+  },
+
+  renderZonesGrid(zones) {
+    const container = document.getElementById('zonesGrid');
+    if (!container) return;
+
+    container.innerHTML = zones.map(zone => `
+      <div class="glass-card zone-card">
+        <div class="zone-header">
+          <h4>${zone.name}</h4>
+          <span class="zone-badge ${zone.valve === 'ON' ? 'badge-active' : 'badge-idle'}">
+            ${zone.valve === 'ON' ? '⚡ Irrigating' : 'Idle'}
+          </span>
+        </div>
+        <div class="zone-details">
+          <span class="detail-label">Crop Type:</span>
+          <span class="detail-value">${zone.crop}</span>
+          <span class="detail-label">Soil Moisture:</span>
+          <span class="detail-value" style="color: ${zone.moisture < zone.threshold ? '#ff6b6b' : '#2ecc71'}">
+            ${zone.moisture}%
+          </span>
+          <span class="detail-label">Threshold:</span>
+          <span class="detail-value">${zone.threshold}%</span>
+          <span class="detail-label">Last Run:</span>
+          <span class="detail-value">${zone.lastIrrigated}</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill ${zone.moisture < zone.threshold ? 'danger' : ''}" style="width: ${zone.moisture}%"></div>
+        </div>
+        <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Valve: <strong>${zone.valve}</strong></span>
+          <button onclick="App.toggleZoneValve('${zone.id}')" class="btn btn-sm ${zone.valve === 'ON' ? 'btn-danger' : 'btn-outline'}">
+            ${zone.valve === 'ON' ? 'Close Valve' : 'Start Drip'}
+          </button>
+        </div>
+      </div>
+    `).join('');
+  },
+
+  toggleZoneValve(zoneId) {
+    const zone = cloudSim.toggleZoneValve(zoneId);
+    if (zone) {
+      showToastNotification(`Zone '${zone.name}' valve switched to ${zone.valve}`);
+    }
+  },
+
+  updateFormRecommendation() {
+    const moisture = parseInt(document.getElementById('soilMoisture')?.value || '35');
+    const crop = document.getElementById('cropType')?.value || 'Rice';
+    const recBox = document.getElementById('formRecommendation');
+    if (!recBox) return;
+
+    let text = "";
+    if (moisture < 30) {
+      text = `⚠️ Critical Deficit for ${crop}! High priority: 45-60 min Drip Irrigation recommended immediately.`;
+    } else if (moisture < 45) {
+      text = `💡 Moderate Moisture for ${crop}: Standard 30 min scheduled morning irrigation advised.`;
+    } else {
+      text = `✅ Moisture Optimal (${moisture}%) for ${crop}: Irrigation can be postponed for 24-48 hours.`;
+    }
+    recBox.textContent = text;
+  },
+
+  handleScheduleSubmit(e) {
+    e.preventDefault();
+
+    const farmerName = document.getElementById('farmerName').value.trim();
+    const location = document.getElementById('farmLocation').value.trim();
+    const cropType = document.getElementById('cropType').value;
+    const moistureLevel = parseInt(document.getElementById('soilMoisture').value);
+    const weatherCondition = document.getElementById('weatherCondition').value;
+    const dateTime = document.getElementById('irrigationDateTime').value;
+
+    // JavaScript Validations
+    if (!farmerName || !location || !cropType || isNaN(moistureLevel) || !weatherCondition || !dateTime) {
+      this.showAlert('scheduleAlert', 'Please fill in all required fields accurately.', 'danger');
+      return;
+    }
+
+    if (moistureLevel < 0 || moistureLevel > 100) {
+      this.showAlert('scheduleAlert', 'Soil moisture level must be between 0% and 100%.', 'danger');
+      return;
+    }
+
+    // Auto-generate Schedule ID (e.g., IRR-7492)
+    const newId = `IRR-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const newSchedule = {
+      id: newId,
+      farmerName,
+      location,
+      cropType,
+      moistureLevel,
+      weatherCondition,
+      dateTime,
+      status: 'Scheduled',
+      createdAt: new Date().toISOString()
+    };
+
+    this.schedules.unshift(newSchedule);
+    this.saveSchedules();
+
+    // Show Confirmation Requirement 2
+    this.showAlert('scheduleAlert', `Your irrigation schedule has been saved successfully! Your Schedule ID is: ${newId}`, 'success');
+
+    // Reset Form
+    e.target.reset();
+    document.getElementById('soilMoisture').value = 35;
+    document.getElementById('moistureValBadge').textContent = '35%';
+
+    // Scroll smoothly to schedules list
+    setTimeout(() => {
+      document.getElementById('monitor-soil')?.scrollIntoView({ behavior: 'smooth' });
+    }, 1500);
+  },
+
+  handleTrackLookup(e) {
+    e.preventDefault();
+    const searchId = document.getElementById('trackScheduleId').value.trim().toUpperCase();
+    const resultBox = document.getElementById('trackResult');
+
+    if (!searchId) {
+      resultBox.innerHTML = `<div class="alert-box alert-danger">Please enter a valid Schedule ID (e.g. IRR-8921).</div>`;
+      return;
+    }
+
+    const item = this.schedules.find(s => s.id === searchId);
+    if (item) {
+      resultBox.innerHTML = `
+        <div class="glass-card" style="border-left: 4px solid var(--primary);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3>Schedule Details: ${item.id}</h3>
+            <span class="status-tag status-${item.status.toLowerCase().replace(' ', '')}">${item.status}</span>
+          </div>
+          <div class="zone-details">
+            <span class="detail-label">Farmer Name:</span><span class="detail-value">${item.farmerName}</span>
+            <span class="detail-label">Location:</span><span class="detail-value">${item.location}</span>
+            <span class="detail-label">Crop Type:</span><span class="detail-value">${item.cropType}</span>
+            <span class="detail-label">Moisture Input:</span><span class="detail-value">${item.moistureLevel}%</span>
+            <span class="detail-label">Weather Condition:</span><span class="detail-value">${item.weatherCondition}</span>
+            <span class="detail-label">Scheduled Date/Time:</span><span class="detail-value">${new Date(item.dateTime).toLocaleString()}</span>
+          </div>
+        </div>
+      `;
+    } else {
+      resultBox.innerHTML = `<div class="alert-box alert-danger">No schedule found matching ID '${searchId}'. Please check and try again.</div>`;
+    }
+  },
+
+  renderSchedulesTable() {
+    const tbody = document.getElementById('schedulesTbody');
+    if (!tbody) return;
+
+    const searchTerm = (document.getElementById('searchSchedule')?.value || '').toLowerCase();
+    const statusVal = document.getElementById('filterStatus')?.value || 'ALL';
+
+    const filtered = this.schedules.filter(item => {
+      const matchesSearch = item.farmerName.toLowerCase().includes(searchTerm) ||
+                            item.location.toLowerCase().includes(searchTerm) ||
+                            item.cropType.toLowerCase().includes(searchTerm) ||
+                            item.id.toLowerCase().includes(searchTerm);
+      const matchesStatus = statusVal === 'ALL' || item.status.toUpperCase() === statusVal.toUpperCase();
+      return matchesSearch && matchesStatus;
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding: 2rem; color: var(--text-muted);">No irrigation schedules found matching your query.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(item => `
+      <tr>
+        <td><strong>${item.id}</strong></td>
+        <td>${item.farmerName}</td>
+        <td>${item.location}</td>
+        <td>${item.cropType}</td>
+        <td>
+          <span style="color: ${item.moistureLevel < 35 ? '#ff6b6b' : '#2ecc71'}; font-weight:700;">
+            ${item.moistureLevel}%
+          </span>
+        </td>
+        <td>${item.weatherCondition}</td>
+        <td>${new Date(item.dateTime).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}</td>
+        <td>
+          ${this.isAdminLoggedIn ? `
+            <select class="form-control" style="padding: 0.25rem 0.5rem; font-size:0.8rem;" onchange="App.updateScheduleStatus('${item.id}', this.value)">
+              <option value="Scheduled" ${item.status === 'Scheduled' ? 'selected' : ''}>Scheduled</option>
+              <option value="In Progress" ${item.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+              <option value="Completed" ${item.status === 'Completed' ? 'selected' : ''}>Completed</option>
+            </select>
+          ` : `
+            <span class="status-tag status-${item.status.toLowerCase().replace(' ', '')}">${item.status}</span>
+          `}
+        </td>
+      </tr>
+    `).join('');
+  },
+
+  updateScheduleStatus(id, newStatus) {
+    const item = this.schedules.find(s => s.id === id);
+    if (item) {
+      item.status = newStatus;
+      this.saveSchedules();
+      showToastNotification(`Status for ${id} updated to '${newStatus}'`);
+    }
+  },
+
+  exportCsv() {
+    if (!this.schedules || this.schedules.length === 0) {
+      showToastNotification('No schedule data available to export.');
+      return;
+    }
+
+    let csvContent = "data:text/csv;charset=utf-8,Schedule ID,Farmer Name,Location,Crop Type,Soil Moisture,Weather,Scheduled Date,Status\n";
+    this.schedules.forEach(s => {
+      csvContent += `"${s.id}","${s.farmerName}","${s.location}","${s.cropType}","${s.moistureLevel}%","${s.weatherCondition}","${s.dateTime}","${s.status}"\n`;
+    });
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `Irrigation_Schedules_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToastNotification('Exported schedules to CSV file!');
+  },
+
+  updateStatsCounters() {
+    const totalCount = this.schedules.length;
+    const completedCount = this.schedules.filter(s => s.status === 'Completed').length;
+    
+    const totalEl = document.getElementById('statTotalSchedules');
+    const completedEl = document.getElementById('statCompletedSchedules');
+    
+    if (totalEl) totalEl.textContent = totalCount;
+    if (completedEl) completedEl.textContent = completedCount;
+  },
+
+  toggleAdminModal(show) {
+    const modal = document.getElementById('adminModal');
+    if (modal) {
+      if (show) modal.classList.add('active');
+      else modal.classList.remove('active');
+    }
+  },
+
+  handleAdminLogin(e) {
+    e.preventDefault();
+    const user = document.getElementById('adminUser').value;
+    const pass = document.getElementById('adminPass').value;
+
+    if (user === 'admin' && pass === 'admin123') {
+      this.isAdminLoggedIn = true;
+      this.toggleAdminModal(false);
+      this.renderSchedulesTable();
+      showToastNotification('Successfully logged in as Admin!');
+      
+      const badge = document.getElementById('adminStatusBadge');
+      if (badge) badge.style.display = 'inline-block';
+    } else {
+      this.showAlert('adminLoginAlert', 'Invalid credentials! Use demo login (admin / admin123).', 'danger');
+    }
+  },
+
+  handleContactSubmit(e) {
+    e.preventDefault();
+    this.showAlert('contactAlert', 'Thank you! Your message has been sent to our Cloud Support Team.', 'success');
+    e.target.reset();
+  },
+
+  showAlert(containerId, message, type) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = `
+      <div class="alert-box alert-${type}">
+        <span>${message}</span>
+      </div>
+    `;
+    setTimeout(() => {
+      container.innerHTML = '';
+    }, 6000);
+  }
+};
+
+function showToastNotification(msg) {
+  const toast = document.createElement('div');
+  toast.className = 'alert-box alert-success';
+  toast.style.position = 'fixed';
+  toast.style.bottom = '20px';
+  toast.style.right = '20px';
+  toast.style.zIndex = '3000';
+  toast.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+  toast.innerHTML = `<span>${msg}</span>`;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.remove();
+  }, 4000);
+}
+
+function openModal(modalId) {
+  const el = document.getElementById(modalId);
+  if (el) el.classList.add('active');
+}
+
+function closeModal(modalId) {
+  const el = document.getElementById(modalId);
+  if (el) el.classList.remove('active');
+}
+
+  </script>
 </body>
 </html>
